@@ -43,17 +43,25 @@ export function configureStore<State, Action>(
   };
 }
 
-export function combineReducers<State, Action>(config?: object) {
+type ReducerConfig<State, Action> = {
+  [key in keyof State]: (
+    state: State[key] | undefined,
+    action: Action
+  ) => State[key];
+};
+
+export function combineReducers<State, Action>(
+  config?: ReducerConfig<State, Action>
+) {
   return (state: State, action: Action) => {
     const result = {} as State;
-    /* eslint no-restricted-syntax: "off" */
-    for (const key in config) {
-      if (config) {
-        result[key as keyof State] = config[key as keyof object](
-          state && state[key as keyof typeof state],
+    if (config !== undefined) {
+      Object.keys(config).forEach((key) => {
+        result[key as keyof State] = config[key as keyof typeof config](
+          state && state[key as keyof State],
           action
         );
-      }
+      });
     }
     return result;
   };

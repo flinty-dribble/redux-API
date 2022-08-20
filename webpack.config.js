@@ -1,31 +1,34 @@
-import { resolve as _resolve } from "path";
+/* eslint @typescript-eslint/no-var-requires: "off" */
+const path = require("path");
 
 const mode = process.env.NODE_ENV;
 
-export const entry = "./src/index.ts";
-export const output = {
-  path: _resolve(__dirname, "dist"),
-  filename: "bundle.js",
-  clean: true,
-  environment: {
-    arrowFunction: false,
-  },
-};
-export const devtool = mode === "production" ? "source-map" : "eval-source-map";
-export const module = {
-  rules: [
-    {
-      test: /\.tsx?$/,
-      use: {
-        loader: "babel-loader",
-        options: {
-          presets: ["@babel/preset-env"],
-        },
-      },
-      exclude: /node_modules/,
+module.exports = {
+  entry: "./src/redux.ts",
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
+    clean: true,
+    environment: {
+      arrowFunction: false,
     },
-  ],
-};
-export const resolve = {
-  extensions: [".tsx", ".ts", ".js"],
+  },
+  devtool: mode === "production" ? "source-map" : "eval-source-map",
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
 };

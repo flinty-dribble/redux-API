@@ -45,7 +45,8 @@
     "jest-environment-jsdom": "^28.1.1",
     "lint-staged": "^12.3.4",
     "prettier": "2.5.1",
-    "typescript": "^4.6.4"
+    "typescript": "^4.6.4",
+    "webpack-cli": "^4.10.0"
   },
   "lint-staged": {
     "*.js": "eslint --fix",

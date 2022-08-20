@@ -75,8 +75,8 @@ describe("combineReducers", () => {
   });
   it("returns a reducer based on the config (initial state)", () => {
     const reducer = combineReducers({
-      a: (action: object, state = 2) => state,
-      b: (action: object, state = "hop") => state,
+      a: (state = 2) => state,
+      b: (state = "hop") => state,
     });
     expect(reducer(undefined, { type: "unknown" })).toEqual({
       a: 2,
@@ -86,8 +86,8 @@ describe("combineReducers", () => {
   it("calls subreducers with proper values", () => {
     type State = { a: number; b: number };
     const config = {
-      a: jest.fn((action, state = 5) => state + action.payload),
-      b: jest.fn((action, state = 6) => state - action.payload),
+      a: jest.fn((state = 5, action = {}) => state + action.payload),
+      b: jest.fn((state = 6, action = {}) => state - action.payload),
     };
     const reducer = combineReducers<State, { payload: number }>(config);
     const state: State = {
